@@ -52,12 +52,12 @@ def Tampilan():
         
 def back_to_menu():
     print("\n")
-    input("Tekan Enter untuk kembali...")
+    input("Tekan Enter untuk kembali Ke Menu...")
     menu()
     
 def inputan_salah():
     print("\n")
-    input("Tekan Enter Untuk Kembali...")
+    input("Tekan Enter Untuk Kembali Ke Menu...")
     inputan()
     
 def inputan():
