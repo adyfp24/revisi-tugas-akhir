@@ -9,6 +9,9 @@ def clear_screen():
 def menu():
     clear_screen()
     print("=== BIT COUNT ===")
+    print("Selamat Datang Di aplikasi Kami \nYang memaksimalkan lahan anda\nuntuk pertanian")
+    print("=================")
+    print("")
     print("[1] Lihat Data ")
     print("[2] Buat Data Baru")
     print("[3] Edit Data")
@@ -42,7 +45,7 @@ def Tampilan():
     print("-"*100)
 
     for data in contacts:
-        print(f"{data['NO']} \t {data['NAMA']} \t\t {data['LUAS']} \t\t {data['JENIS TANAMAN']} \t\t\t {data['TANAMAN YANG DAPAT DITANAM']}")
+        print(f"{data['NO']} \t {data['NAMA']} \t {data['LUAS']} \t\t {data['JENIS TANAMAN']} \t\t\t {data['TANAMAN YANG DAPAT DITANAM']}")
         
     back_to_menu()
 
@@ -60,7 +63,7 @@ def inputan_salah():
 def inputan():
     clear_screen()
     contacts = []
-    nomor = input("masukkan nomor urutan : ")
+    nomor = input("masukkan nomor urutan = ")
     with open(nama_csv, mode="r") as data_csv:
         csv_reader = csv.DictReader(data_csv)
         for row in csv_reader:
@@ -74,7 +77,11 @@ def inputan():
     nama = input("masukkan nama anda : ")
     luas = int(input("masukkan luas lahan anda (m^2): "))
     jenis_tanaman = input("masukkan jenis tanaman yang ingin ditanam : ")
-    jarak_antar_tanaman = int(input("masukkan jarak antar tanaman (m^2) : "))
+    jarak_antar_tanaman = int(input("masukkan jarak lebar antar tanaman(cm) : "))
+    jarak_antar_tanaman1 = int(input("masukkan jarak panjang antar tanaman(cm) : "))
+    jarak_antar_tanaman = jarak_antar_tanaman / 100
+    jarak_antar_tanaman1 = jarak_antar_tanaman1 / 100
+    jarak_antar_tanaman = jarak_antar_tanaman*jarak_antar_tanaman1
     jumlah_maksimal = luas/jarak_antar_tanaman
     
     with open(nama_csv, mode='a') as data_csv:
@@ -102,7 +109,7 @@ def Hapus():
     print("-"*100)
 
     for data in contacts:
-        print(f"{data['NO']} \t {data['NAMA']} \t\t {data['LUAS']} \t\t\t {data['JENIS TANAMAN']} \t \t {data['TANAMAN YANG DAPAT DITANAM']}")
+        print(f"{data['NO']} \t {data['NAMA']} \t {data['LUAS']} \t\t\t {data['JENIS TANAMAN']} \t \t {data['TANAMAN YANG DAPAT DITANAM']}")
 
     print("-"*100)
     nomor = input("Hapus nomer> ")
@@ -134,36 +141,38 @@ def Edit():
     print("-"*100)
 
     for data in contacts:
-        print(f"{data['NO']} \t {data['NAMA']} \t\t {data['LUAS']} \t\t\t {data['JENIS TANAMAN']} \t \t {data['TANAMAN YANG DAPAT DITANAM']}")
+        print(f"{data['NO']} \t {data['NAMA']} \t {data['LUAS']} \t\t\t {data['JENIS TANAMAN']} \t \t {data['TANAMAN YANG DAPAT DITANAM']}")
 
     print("-"*100)
-    nomor = input("masukkan nomor urutan : ")
-    nama = input("masukkan nama anda : ")
-    luas = int(input("masukkan luas lahan anda (m^2): "))
-    jenis_tanaman = input("masukkan jenis tanaman yang ingin ditanam : ")
-    jarak_antar_tanaman = int(input("masukkan jarak antar tanaman (m^2): "))
-    jumlah_maksimal = luas/jarak_antar_tanaman
-    jumlah_maksimal =int(jumlah_maksimal)
-
-    # mencari contact dan mengubah datanya
-    # dengan data yang baru
-    indeks = 0
+    nomor = input("masukkan nomor urutan = ")   
     for data in contacts:
-        if (data['NO'] == nomor):
-            contacts[indeks]['NAMA'] = nama
-            contacts[indeks]['LUAS'] = luas 
-            contacts[indeks]['JENIS TANAMAN'] = jenis_tanaman
-            contacts[indeks]['TANAMAN YANG DAPAT DITANAM'] = jumlah_maksimal
-        indeks = indeks + 1
-
-    # Menulis data baru ke file CSV (tulis ulang)
-    with open(nama_csv, mode="w") as data_csv:
-        fieldnames = ['NO', 'NAMA', 'LUAS' , 'JENIS TANAMAN' , 'TANAMAN YANG DAPAT DITANAM']
-        writer = csv.DictWriter(data_csv, fieldnames=fieldnames)
-        writer.writeheader()
-        for new_data in contacts:
-            writer.writerow({'NO': new_data['NO'], 'NAMA': new_data['NAMA'], 'LUAS': new_data['LUAS'] , 'JENIS TANAMAN':new_data['JENIS TANAMAN'] , 'TANAMAN YANG DAPAT DITANAM':new_data['TANAMAN YANG DAPAT DITANAM']}) 
+        if nomor == data['NO']:
+            nama = input("masukkan nama anda : ")
+            luas = int(input("masukkan luas lahan anda (m^2): "))
+            jenis_tanaman = input("masukkan jenis tanaman yang ingin ditanam : ")
+            jarak_antar_tanaman = int(input("masukkan jarak lebar antar tanaman(cm) : "))
+            jarak_antar_tanaman1 = int(input("masukkan jarak panjang antar tanaman(cm) : "))
+            jarak_antar_tanaman = jarak_antar_tanaman / 100
+            jarak_antar_tanaman1 = jarak_antar_tanaman1 / 100
+            jarak_antar_tanaman = jarak_antar_tanaman*jarak_antar_tanaman1
+            jumlah_maksimal = luas/jarak_antar_tanaman 
+            jumlah_maksimal = int(jumlah_maksimal)    
+            indeks = 0
+            for data in contacts:
+                if (data['NO'] == nomor):
+                    contacts[indeks]['NAMA'] = nama
+                    contacts[indeks]['LUAS'] = luas 
+                    contacts[indeks]['JENIS TANAMAN'] = jenis_tanaman
+                    contacts[indeks]['TANAMAN YANG DAPAT DITANAM'] = jumlah_maksimal
+                indeks = indeks + 1
+            with open(nama_csv, mode="w") as data_csv:
+                fieldnames = ['NO', 'NAMA', 'LUAS' , 'JENIS TANAMAN' , 'TANAMAN YANG DAPAT DITANAM']
+                writer = csv.DictWriter(data_csv, fieldnames=fieldnames)
+                writer.writeheader()
+                for new_data in contacts:
+                    writer.writerow({'NO': new_data['NO'], 'NAMA': new_data['NAMA'], 'LUAS': new_data['LUAS'] , 'JENIS TANAMAN':new_data['JENIS TANAMAN'] , 'TANAMAN YANG DAPAT DITANAM':new_data['TANAMAN YANG DAPAT DITANAM']}) 
+            back_to_menu()
+    print("maaf nomor anda tidak ada di database kita")
     back_to_menu()
-
     
 menu()
